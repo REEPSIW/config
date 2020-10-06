@@ -47,7 +47,7 @@ set shiftwidth=4
 set ai
 syntax enable
 set background=dark
-colorscheme material-theme
+colorscheme onehalfdark
 set list " включить подсветку
 set listchars=tab:>Ј,trail:Х,extends:>,precedes:<,space:Х
 set list
