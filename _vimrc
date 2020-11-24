@@ -108,4 +108,4 @@ let g:rainbow_active = 1
 map <C-d> :<Esc>zf<CR>
 autocmd FileType apache setlocal commentstring=#\ %s
 set langmap=װֲָׁ׃ְֿ׀״־ִֻÜׂÙַֹÊÛֳֵּײ׳ֽß;ABCDEFGHIJKLMNOPQRSTUVWXYZ,פטסגףאןנרמכהüעשחיךûודלצקםÿ;abcdefghijklmnopqrstuvwxyz
-"let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_at_startup = 1
