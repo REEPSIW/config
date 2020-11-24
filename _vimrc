@@ -114,5 +114,6 @@ set shiftwidth=4
 set smarttab
 set expandtab
 set smartindent
+:highlight Normal ctermfg=grey ctermbg=black
 ":h delimitMate_expand_cr
 ":h delimitMateExpansion
