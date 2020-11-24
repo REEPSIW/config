@@ -41,9 +41,6 @@ function MyDiff()
     let &shellxquote=l:shxq_sav
   endif
 endfunction
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
 set ai
 syntax enable
 set background=dark
@@ -56,10 +53,11 @@ set incsearch
 :set hlsearch
 :set ignorecase
 :set smartcase
-:set autoindent
-:set expandtab
-:set smartindent
+set nocompatible
+set nowrap
+set showmatch
 :set iskeyword=@,48-57,_,192-255
+set backspace=indent,eol,start
 highlight Cursor guifg=white guibg=red
 highlight iCursor guifg=white guibg=red
 :set history=128 " õğàíèòü áîëüøå èñòîğèè êîìàíä
@@ -98,6 +96,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'Shougo/neocomplcache.vim'
+Plug 'Raimondi/delimitMate'
 call plug#end()
 set laststatus=2
 set noshowmode
@@ -109,3 +108,11 @@ map <C-d> :<Esc>zf<CR>
 autocmd FileType apache setlocal commentstring=#\ %s
 set langmap=ÔÈÑÂÓÀÏĞØÎËÄÜÒÙÇÉÊÛÅÃÌÖ×Íß;ABCDEFGHIJKLMNOPQRSTUVWXYZ,ôèñâóàïğøîëäüòùçéêûåãìö÷íÿ;abcdefghijklmnopqrstuvwxyz
 let g:neocomplcache_enable_at_startup = 1
+let delimitMate_expand_cr = 1
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+set smartindent
+":h delimitMate_expand_cr
+":h delimitMateExpansion
