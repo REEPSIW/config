@@ -9,6 +9,7 @@ source $VIMRUNTIME/mswin.vim
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
+
 function MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -44,10 +45,7 @@ endfunction
 set ai
 syntax enable
 set background=dark
-colorscheme onehalfdark
-set list " âêëş÷èòü ïîäñâåòêó
 "set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
-set list
 :set number
 set incsearch
 :set hlsearch
@@ -79,7 +77,10 @@ if has("gui_running")
 endif
 "syntax match Tab / /
 "hi Tab gui=reverse guifg=#1c1c1c ctermbg=red
-
+set nocompatible
+filetype off
+se nolist
+filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 " https://github.com/itchyny/lightline.vim
 Plug 'itchyny/lightline.vim'
@@ -90,21 +91,38 @@ Plug 'luochen1990/rainbow'
 Plug 'tomasiser/vim-code-dark'
 Plug 'dunstontc/vim-vscode-theme'
 Plug 'Townk/vim-autoclose'
-Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'Shougo/neocomplcache.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'aisapatino/hex-highlight'
+Plug 'tomtom/tcomment_vim'
+Plug 'matze/vim-move'
+Plug 'ap/vim-css-color'
+Plug 'mhinz/vim-startify'
+Plug 'yanoasis/vim-devicons'
+let g:startify_bookmarks = [
+            \ { 'vimrc': 'C:\Vim\_vimrc' },
+            \ ]
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 call plug#end()
-set laststatus=2
+"map <F2>:call HexHighlight()
+let g:move_key_modifier = 'C'
+vmap <C-Down> <Plug>MoveBlockDown
+vmap <C-Up> <Plug>MoveBlockUp
+nmap <C-Up> <Plug>MoveLineUp
+nmap <C-Down> <Plug>MoveLineDown
+set laststatus=128
 set noshowmode
+colorscheme molokai
 "autocmd vimenter * NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 map <C-d> :<Esc>zf<CR>
+map <C-/> :<Esc>gc<CR>
 autocmd FileType apache setlocal commentstring=#\ %s
 set langmap=ÔÈÑÂÓÀÏĞØÎËÄÜÒÙÇÉÊÛÅÃÌÖ×Íß;ABCDEFGHIJKLMNOPQRSTUVWXYZ,ôèñâóàïğøîëäüòùçéêûåãìö÷íÿ;abcdefghijklmnopqrstuvwxyz
 let g:neocomplcache_enable_at_startup = 1
@@ -115,5 +133,8 @@ set smarttab
 set expandtab
 set smartindent
 :highlight Normal ctermfg=grey ctermbg=black
+highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#2c2b2b guifg=NONE
+
+set cursorline
 ":h delimitMate_expand_cr
 ":h delimitMateExpansion
