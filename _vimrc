@@ -102,7 +102,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
-Plug 'yanoasis/vim-devicons'
+Plug 'arzg/vim-colors-xcode'
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
             \ ]
@@ -116,7 +116,7 @@ nmap <C-Up> <Plug>MoveLineUp
 nmap <C-Down> <Plug>MoveLineDown
 set laststatus=128
 set noshowmode
-colorscheme molokai
+colorscheme xcodedarkhc
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
@@ -134,7 +134,7 @@ set expandtab
 set smartindent
 :highlight Normal ctermfg=grey ctermbg=black
 highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#2c2b2b guifg=NONE
-
+set mouse=a
 set cursorline
 ":h delimitMate_expand_cr
 ":h delimitMateExpansion
