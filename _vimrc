@@ -73,8 +73,6 @@ if has("gui_running")
     set guifont=Consolas:h13:cDEFAULT
   endif
 endif
-"syntax match Tab / /
-"hi Tab gui=reverse guifg=#1c1c1c ctermbg=red
 set nocompatible
 filetype off
 se list
@@ -130,6 +128,7 @@ set smarttab
 set expandtab
 set smartindent
 :highlight Normal ctermfg=grey ctermbg=black
+hi clear CursorLine
 highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#292424 guifg=NONE
 set mouse=a
 set cursorline
@@ -143,6 +142,7 @@ set cursorline
 :match Space / /
 highlight Cursor guibg=red
 highlight iCursor guibg=red
+
 set guicursor+=n-v-c:blinkon0
 
 
