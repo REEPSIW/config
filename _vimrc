@@ -45,7 +45,7 @@ endfunction
 set ai
 syntax enable
 set background=dark
-"set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
+set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
 :set number
 set incsearch
 :set hlsearch
@@ -56,8 +56,6 @@ set nowrap
 set showmatch
 :set iskeyword=@,48-57,_,192-255
 set backspace=indent,eol,start
-highlight Cursor guifg=white guibg=red
-highlight iCursor guifg=white guibg=red
 :set history=128 " хранить больше истории команд
 :set undolevels=2048 " хранить историю изменений числом N
 :set fileencoding=windows-1251
@@ -79,14 +77,13 @@ endif
 "hi Tab gui=reverse guifg=#1c1c1c ctermbg=red
 set nocompatible
 filetype off
-se nolist
+se list
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 " https://github.com/itchyny/lightline.vim
 Plug 'itchyny/lightline.vim'
 " https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
 Plug 'Townk/vim-autoclose'
 Plug 'tpope/vim-commentary'
@@ -100,14 +97,15 @@ Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
+
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
-            \ ] 
+            \ ]
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 call plug#end()
-"map <F2>:call HexHighlight()
+
 let g:move_key_modifier = 'C'
 vmap <C-Down> <Plug>MoveBlockDown
 vmap <C-Up> <Plug>MoveBlockUp
@@ -132,8 +130,19 @@ set smarttab
 set expandtab
 set smartindent
 :highlight Normal ctermfg=grey ctermbg=black
-highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#2c2b2b guifg=NONE
+highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#292424 guifg=NONE
 set mouse=a
 set cursorline
 ":h delimitMate_expand_cr
 ":h delimitMateExpansion
+"set t_Co=256
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#4f4646   ctermbg=7
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#4f4646   ctermbg=7
+:hi Space guifg=#4f4646
+:match Space / /
+highlight Cursor guibg=red
+highlight iCursor guibg=red
+set guicursor+=n-v-c:blinkon0
+
+
