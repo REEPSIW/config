@@ -116,7 +116,7 @@ nmap <C-Up> <Plug>MoveLineUp
 nmap <C-Down> <Plug>MoveLineDown
 set laststatus=128
 set noshowmode
-colorscheme xcodedarkhc
+colorscheme molokai
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
