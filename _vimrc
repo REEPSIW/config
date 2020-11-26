@@ -88,8 +88,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
-Plug 'tomasiser/vim-code-dark'
-Plug 'dunstontc/vim-vscode-theme'
 Plug 'Townk/vim-autoclose'
 Plug 'tpope/vim-commentary'
 Plug 'Shougo/deoplete.nvim'
@@ -102,10 +100,11 @@ Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
-Plug 'arzg/vim-colors-xcode'
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
-            \ ]
+            \ ] 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 call plug#end()
 "map <F2>:call HexHighlight()
