@@ -95,14 +95,11 @@ Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
-
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
+call plug#end()
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
             \ ]
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-call plug#end()
 
 let g:move_key_modifier = 'C'
 vmap <C-Down> <Plug>MoveBlockDown
@@ -132,14 +129,11 @@ hi clear CursorLine
 highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#292424 guifg=NONE
 set mouse=a
 set cursorline
-":h delimitMate_expand_cr
-":h delimitMateExpansion
-"set t_Co=256
-"let g:indent_guides_auto_colors = 0
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#4f4646   ctermbg=7
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#4f4646   ctermbg=7
 :hi Space guifg=#4f4646
 :match Space / /
+:hi StringKey guifg=#2ff494
+:match StringKey /string/
+:match StringKey /to_string/
 highlight Cursor guibg=red
 highlight iCursor guibg=red
 
