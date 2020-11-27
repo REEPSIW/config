@@ -30,7 +30,7 @@ hi Boolean         guifg=#602dda
 hi Character       guifg=#E6DB74
 hi Number          guifg=#95d5a1             
 hi String          guifg=#e6ae3e
-hi Conditional     guifg=#F92672              
+hi Conditional     guifg=#de75c5              
 hi Constant        guifg=#AE81FF               
 hi Cursor          guifg=#000000 guibg=#F8F8F0
 hi iCursor         guifg=#000000 guibg=#F8F8F0
@@ -50,16 +50,16 @@ hi Float           guifg=#95d5a1
 hi FoldColumn      guifg=#465457 guibg=#000000
 hi Folded          guifg=#465457 guibg=#000000
 hi Function        guifg=#A6E22E
-hi Identifier      guifg=#3d3cd9
+hi Identifier      guifg=#0d7ce9
 hi Ignore          guifg=#808080 guibg=bg
 hi IncSearch       guifg=#C4BE89 guibg=#000000
 
-hi Keyword         guifg=#9e28e6             
+hi Keyword         guifg=#df21df         
 hi Label           guifg=#E6DB74               
 hi Macro           guifg=#C4BE89               
 hi SpecialKey      guifg=#66D9EF        gui=none       
 
-hi MatchParen      guifg=#000000 guibg=#FD971F 
+hi MatchParen      guifg=#000000 guibg=#0b97be
 hi ModeMsg         guifg=#E6DB74
 hi MoreMsg         guifg=#E6DB74
 hi Operator        guifg=#0d7ce9  gui=none 
@@ -77,7 +77,7 @@ hi Repeat          guifg=#F92672
 hi Search          guifg=#000000 guibg=#FFE792
 " marks
 hi SignColumn      guifg=#A6E22E guibg=#232526
-hi SpecialChar     guifg=#F92672               
+hi SpecialChar     guifg=#eacd19             
 hi SpecialComment  guifg=#7E8E91               
 hi Special         guifg=#66D9EF guibg=bg      
 if has("spell")
@@ -122,7 +122,7 @@ else
    hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
    hi Comment         guifg=#42cf64
    hi CursorLine                    guibg=#293739
-   hi CursorLineNr    guifg=#FD971F               gui=none
+   hi CursorLineNr    guifg=#ef5939               gui=none
    hi CursorColumn                  guibg=#293739
    hi ColorColumn                   guibg=#232526
    hi LineNr          guifg=#465457 guibg=#232526
@@ -135,7 +135,7 @@ end
 "
 if &t_Co > 255
    if s:molokai_original == 1
-      hi Normal                   ctermbg=234
+      hi Normal                   ctermbg=darkgray
       hi CursorLine               ctermbg=235   cterm=none
       hi CursorLineNr ctermfg=208               cterm=none
    else
@@ -273,3 +273,4 @@ end
 " Must be at the end, because of ctermbg=234 bug.
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
 set background=dark
+:let @/ = ""
