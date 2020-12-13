@@ -59,13 +59,13 @@ hi Label           guifg=#E6DB74
 hi Macro           guifg=#C4BE89               
 hi SpecialKey      guifg=#66D9EF        gui=none       
 
-hi MatchParen      guifg=#000000 guibg=#0b97be
+hi MatchParen      guifg=#000000 guibg=#C4BE89
 hi ModeMsg         guifg=#E6DB74
 hi MoreMsg         guifg=#E6DB74
 hi Operator        guifg=#0d7ce9  gui=none 
 
 " complete menu
-hi Pmenu           guifg=#66D9EF guibg=#000000
+hi Pmenu           guifg=#FFFFFF  guibg=#080808
 hi PmenuSel                      guibg=#808080
 hi PmenuSbar                     guibg=#080808
 hi PmenuThumb      guifg=#66D9EF
