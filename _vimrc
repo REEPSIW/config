@@ -97,6 +97,9 @@ Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
+Plug 'bfrg/vim-cpp-modern'
+Plug 'vim-scripts/vim-auto-save'
+Plug 'eugen0329/vim-esearch'
 call plug#end()
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
@@ -257,3 +260,9 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+let g:cpp_attributes_highlight = 1
+let g:cpp_member_highlight = 1
+let g:auto_save = 1
+let g:auto_save_silent = 1
+
+
