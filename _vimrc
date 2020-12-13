@@ -264,5 +264,5 @@ let g:cpp_attributes_highlight = 1
 let g:cpp_member_highlight = 1
 let g:auto_save = 1
 let g:auto_save_silent = 1
-
+vmap <C-Shift-z> :<Esc>:undo<CR>
 
