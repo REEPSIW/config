@@ -98,16 +98,15 @@ Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
 Plug 'bfrg/vim-cpp-modern'
-Plug 'vim-scripts/vim-auto-save'
-Plug 'eugen0329/vim-esearch'
+Plug 'thinca/vim-quickrun'
 call plug#end()
 let g:startify_bookmarks = [
             \ { 'vimrc': 'C:\Vim\_vimrc' },
             \ ]
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:move_key_modifier = 'C'
-vmap <C-Down> <Plug>MoveBlockDown
-vmap <C-Up> <Plug>MoveBlockUp
+nmap <C-Down> <Plug>MoveBlockDown
+nmap <C-Up> <Plug>MoveBlockUp
 nmap <C-Up> <Plug>MoveLineUp
 nmap <C-Down> <Plug>MoveLineDown
 set laststatus=128
@@ -137,7 +136,6 @@ set cursorline
 :match Space / /
 highlight Cursor guibg=red
 highlight iCursor guibg=red
-
 set guicursor+=n-v-c:blinkon0
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -260,9 +258,9 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Enable highlighting of C++11 attributes
 let g:cpp_attributes_highlight = 1
+
+" Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
-let g:auto_save = 1
-let g:auto_save_silent = 1
-vmap <C-Shift-z> :<Esc>:undo<CR>
 
