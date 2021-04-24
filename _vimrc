@@ -1,3 +1,5 @@
+
+
 " Vim with all enhancements
 source $VIMRUNTIME/vimrc_example.vim
 
@@ -44,20 +46,20 @@ function MyDiff()
 endfunction
 set ai
 syntax enable
-set background=dark
-set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
+set listchars=tab:>В·,trail:В·,extends:>,precedes:<,space:В·
 :set number
 set incsearch
 :set hlsearch
 :set ignorecase
 :set smartcase
+set nolist 
 set nocompatible
 set nowrap
 set showmatch
 :set iskeyword=@,48-57,_,192-255
 set backspace=indent,eol,start
-:set history=128 " хранить больше истории команд
-:set undolevels=2048 " хранить историю изменений числом N
+:set history=128 " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+:set undolevels=2048 " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ N
 :set fileencoding=windows-1251
 :set guifont=Consolas:h14
 if has("gui_running")
@@ -78,17 +80,13 @@ filetype off
 se list
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
-" https://github.com/itchyny/lightline.vim
 Plug 'itchyny/lightline.vim'
-" https://github.com/scrooloose/nerdtree
 Plug 'scrooloose/nerdtree'
 Plug 'luochen1990/rainbow'
 Plug 'Townk/vim-autoclose'
 Plug 'tpope/vim-commentary'
-Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'Shougo/neocomplcache.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'aisapatino/hex-highlight'
 Plug 'tomtom/tcomment_vim'
@@ -96,14 +94,11 @@ Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'morhetz/gruvbox'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'thinca/vim-quickrun'
+Plug 'morhetz/gruvbox'
 call plug#end()
-let g:startify_bookmarks = [
-            \ { 'vimrc': 'C:\Vim\_vimrc' },
-            \ ]
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+colorscheme molokai
 let g:move_key_modifier = 'C'
 nmap <C-Down> <Plug>MoveBlockDown
 nmap <C-Up> <Plug>MoveBlockUp
@@ -111,7 +106,6 @@ nmap <C-Up> <Plug>MoveLineUp
 nmap <C-Down> <Plug>MoveLineDown
 set laststatus=128
 set noshowmode
-colorscheme molokai
 :set noundofile
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
@@ -120,7 +114,6 @@ let g:rainbow_active = 1
 map <C-d> :<Esc>zf<CR>
 map <C-/> :<Esc>gc<CR>
 autocmd FileType apache setlocal commentstring=#\ %s
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 let delimitMate_expand_cr = 1
 set tabstop=4
 set shiftwidth=4
@@ -129,7 +122,6 @@ set expandtab
 set smartindent
 :highlight Normal ctermfg=grey ctermbg=black
 hi clear CursorLine
-highlight CursorLine cterm=NONE ctermbg=black ctermfg=white guibg=#292424 guifg=NONE
 set mouse=a
 set cursorline
 :hi Space guifg=#4f4646
@@ -179,7 +171,6 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -260,7 +251,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " Enable highlighting of C++11 attributes
 let g:cpp_attributes_highlight = 1
-
+let g:coc_disable_startup_warning = 1
 " Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
+
+
 
