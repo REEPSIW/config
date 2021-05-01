@@ -8,7 +8,7 @@
 " by Hamish Stuart Macpherson
 "
 
-hi clear
+"hi clear
 
 if version > 580
     " no guarantees for version 5.8 and below, but this makes it stop
@@ -25,7 +25,7 @@ if exists("g:molokai_original")
 else
     let s:molokai_original = 0
 endif
-
+:hi cursorline guifg=NONE
 hi Boolean         guifg=#602dda              
 hi Character       guifg=#E6DB74
 hi Number          guifg=#95d5a1             
@@ -111,7 +111,6 @@ hi TabLine         guibg=#1B1D1E guifg=#808080 gui=none
 if s:molokai_original == 1
    hi Normal          guifg=#F8F8F2 guibg=#272822
    hi Comment         guifg=#75715E
-   hi CursorLine                    guibg=#3E3D32
    hi CursorLineNr    guifg=#FD971F               gui=none
    hi CursorColumn                  guibg=#3E3D32
    hi ColorColumn                   guibg=#3B3A32
@@ -121,7 +120,6 @@ if s:molokai_original == 1
 else
    hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
    hi Comment         guifg=#42cf64
-   hi CursorLine                    guibg=#293739
    hi CursorLineNr    guifg=#ef5939               gui=none
    hi CursorColumn                  guibg=#293739
    hi ColorColumn                   guibg=#232526
@@ -136,11 +134,9 @@ end
 if &t_Co > 255
    if s:molokai_original == 1
       hi Normal                   ctermbg=darkgray
-      hi CursorLine               ctermbg=235   cterm=none
       hi CursorLineNr ctermfg=208               cterm=none
    else
       hi Normal       ctermfg=252 ctermbg=233
-      hi CursorLine               ctermbg=234   cterm=none
       hi CursorLineNr ctermfg=208               cterm=none
    endif
    hi Boolean         ctermfg=135
@@ -149,7 +145,6 @@ if &t_Co > 255
    hi String          ctermfg=144
    hi Conditional     ctermfg=161               cterm=bold
    hi Constant        ctermfg=135               cterm=bold
-   hi Cursor          ctermfg=16  ctermbg=253
    hi Debug           ctermfg=225               cterm=bold
    hi Define          ctermfg=81
    hi Delimiter       ctermfg=241
@@ -176,13 +171,13 @@ if &t_Co > 255
    hi Macro           ctermfg=193
    hi SpecialKey      ctermfg=81
 
-   hi MatchParen      ctermfg=233  ctermbg=208 cterm=bold
+   hi MatchParen      ctermfg=232   ctermbg=8 cterm=bold
    hi ModeMsg         ctermfg=229
    hi MoreMsg         ctermfg=229
    hi Operator        ctermfg=161
 
    " complete menu
-   hi Pmenu           ctermfg=81  ctermbg=16
+   hi Pmenu           ctermfg=white  ctermbg=16
    hi PmenuSel        ctermfg=255 ctermbg=242
    hi PmenuSbar                   ctermbg=232
    hi PmenuThumb      ctermfg=81
@@ -223,23 +218,21 @@ if &t_Co > 255
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
    hi WildMenu        ctermfg=81  ctermbg=16
 
-   hi Comment         ctermfg=59
+   hi Comment         ctermfg=darkgreen
    hi CursorColumn                ctermbg=236
+   hi CursorLine      ctermbg=red ctermfg=NONE
    hi ColorColumn                 ctermbg=236
-   hi LineNr          ctermfg=250 ctermbg=236
    hi NonText         ctermfg=59
 
    hi SpecialKey      ctermfg=59
 
    if exists("g:rehash256") && g:rehash256 == 1
        hi Normal       ctermfg=252 ctermbg=234
-       hi CursorLine               ctermbg=236   cterm=none
-       hi CursorLineNr ctermfg=208               cterm=none
 
        hi Boolean         ctermfg=141
        hi Character       ctermfg=222
        hi Number          ctermfg=141
-       hi String          ctermfg=222
+       hi String          ctermfg=brown 
        hi Conditional     ctermfg=197               cterm=bold
        hi Constant        ctermfg=141               cterm=bold
 
@@ -264,7 +257,6 @@ if &t_Co > 255
        hi Visual                      ctermbg=238
 
        hi Comment         ctermfg=244
-       hi LineNr          ctermfg=239 ctermbg=235
        hi NonText         ctermfg=239
        hi SpecialKey      ctermfg=239
    endif
@@ -274,3 +266,4 @@ end
 " https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ
 set background=dark
 :let @/ = ""
+
