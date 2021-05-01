@@ -94,14 +94,21 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'hallzy/lightline-onedark'
+Plug 'mengelbrecht/lightline-bufferline'
 call plug#end()
 colorscheme molokai
 if &term =~ "xterm"
     let &t_SI = "\<Esc>]12;purple\x7"
     let &t_EI = "\<Esc>]12;blue\x7"
 endif
+let g:lightline#bufferline#enable_devicons = 1
+let g:lightline#bufferline#enable_nerdfont = 1
 set scrolloff=999
 packadd! vimspector
+let g:tablineclosebutton=1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -113,20 +120,34 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:move_key_modifier = 'C'
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-"let g:lightline#bufferline#ordinal_separator='*'
 let g:lightline = {
+      \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'readonly', 'absolutepath' ] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'gitbranch', 'absolutepath' ] ],
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+      \
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \
+      \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
       \ }
-nmap <C-Up> <Plug>MoveBlockUp
-nmap <C-Up> <Plug>MoveLineUp
-nmap <C-Down> <Plug>MoveLineDown
+      \ } 
+nnoremap <Tab> :bn<CR>
+noremap <S-Tab> :bp<CR>
+noremap <Leader><Tab> :Bw<CR>
+noremap <Leader><S-Tab> :Bw!<CR>
+noremap <C-t> :tabnew split<CR>
 set laststatus=2
 set noshowmode
 :set noundofile
@@ -135,9 +156,11 @@ set noshowmode
 map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
+let g:lightline#bufferline#show_number = 2
+set showtabline=2
 :set guicursor+=a:blinkon0
 "map <F3> ggVG :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
-"imap <C-5> <c-o>:py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
+"imap <C-5> <c-o>:py3f /usr/share/clang/clang-let g:lightline#bufferline#show_number  = 1format-6.0/clang-format.py<cr>
 autocmd FileType apache setlocal commentstring=#\ %s
 let delimitMate_expand_cr = 1
 set tabstop=4
@@ -227,6 +250,8 @@ function! s:show_documentation()
   endif
 endfunction
 
+
+
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -255,9 +280,9 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
