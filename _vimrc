@@ -81,31 +81,19 @@ filetype off
 se list
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
-Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'ManOfTeflon/nerdtree-json'
 Plug 'luochen1990/rainbow'
-Plug 'Townk/vim-autoclose'
-Plug 'tpope/vim-commentary'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'Raimondi/delimitMate'
-Plug 'aisapatino/hex-highlight'
 Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bfrg/vim-cpp-modern'
-Plug 'scrooloose/syntastic' 
-Plug 'morhetz/gruvbox'
-Plug 'chiel92/vim-autoformat'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'ryanoasis/vim-devicons'
-Plug 'dunstontc/vim-vscode-theme'
 Plug 'jszakmeister/vim-togglecursor'
-Plug 'tomasiser/vim-code-dark'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 colorscheme molokai
 if &term =~ "xterm"
@@ -148,8 +136,6 @@ map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 :set guicursor+=a:blinkon0
-map <C-d> :<Esc>zf<CR>
-map <C-/> :<Esc>gc<CR>
 "map <F3> ggVG :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 "imap <C-5> <c-o>:py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 autocmd FileType apache setlocal commentstring=#\ %s
