@@ -1,6 +1,5 @@
-
-
 " Vim with all enhancements
+" ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
 source $VIMRUNTIME/vimrc_example.vim
 
 " Remap a few keys for Windows behavior
@@ -47,7 +46,8 @@ endfunction
 set ai
 syntax enable
 set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
-:set number
+set number
+:hi Space ctermfg=darkgrey
 set incsearch
 :set hlsearch
 :set ignorecase
@@ -60,7 +60,8 @@ set showmatch
 set backspace=indent,eol,start
 :set history=128 " ������� ������ ������� ������
 :set undolevels=2048 " ������� ������� ��������� ������ N
-:set fileencoding=windows-1251
+:set fileencoding=utf-8
+set encoding=UTF-8
 :set guifont=Consolas:h14
 if has("gui_running")
   if has("gui_gtk2") || has("gui_gtk3")
@@ -80,8 +81,10 @@ filetype off
 se list
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/lightline.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'itchyny/vim-gitbranch'
+Plug 'ManOfTeflon/nerdtree-json'
 Plug 'luochen1990/rainbow'
 Plug 'Townk/vim-autoclose'
 Plug 'tpope/vim-commentary'
@@ -95,24 +98,60 @@ Plug 'ap/vim-css-color'
 Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bfrg/vim-cpp-modern'
-Plug 'thinca/vim-quickrun'
+Plug 'scrooloose/syntastic' 
 Plug 'morhetz/gruvbox'
+Plug 'chiel92/vim-autoformat'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'ryanoasis/vim-devicons'
+Plug 'dunstontc/vim-vscode-theme'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 colorscheme molokai
+if &term =~ "xterm"
+    let &t_SI = "\<Esc>]12;purple\x7"
+    let &t_EI = "\<Esc>]12;blue\x7"
+endif
+set scrolloff=999
+packadd! vimspector
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:airline_powerline_fonts = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+:match Space / /
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:move_key_modifier = 'C'
-nmap <C-Down> <Plug>MoveBlockDown
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+"let g:lightline#bufferline#ordinal_separator='*'
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'readonly', 'absolutepath' ] ],
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 nmap <C-Up> <Plug>MoveBlockUp
 nmap <C-Up> <Plug>MoveLineUp
 nmap <C-Down> <Plug>MoveLineDown
-set laststatus=128
+set laststatus=2
 set noshowmode
 :set noundofile
+:set cindent
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
+:set guicursor+=a:blinkon0
 map <C-d> :<Esc>zf<CR>
 map <C-/> :<Esc>gc<CR>
+"map <F3> ggVG :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
+"imap <C-5> <c-o>:py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 autocmd FileType apache setlocal commentstring=#\ %s
 let delimitMate_expand_cr = 1
 set tabstop=4
@@ -120,25 +159,39 @@ set shiftwidth=4
 set smarttab
 set expandtab
 set smartindent
-:highlight Normal ctermfg=grey ctermbg=black
-hi clear CursorLine
+:highlight Normal ctermfg=white ctermbg=black
+ let g:coc_start_at_startup = 1
 set mouse=a
-set cursorline
-:hi Space guifg=#4f4646
-:match Space / /
-highlight Cursor guibg=red
-highlight iCursor guibg=red
-set guicursor+=n-v-c:blinkon0
+if has("autocmd")
+  au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+  au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+  au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+endif
 " if hidden is not set, TextEdit might fail.
 set hidden
-
+let g:coc_node_path = '/home/mikhail/node-v10.16.0-linux-x86/bin/node'
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
-
 " Better display for messages
 set cmdheight=2
-
+if &term =~ "xterm\\|rxvt"
+  " use an orange cursor in insert mode
+  let &t_SI = "\<Esc>]12;orange\x7"
+  " use a red cursor otherwise
+  let &t_EI = "\<Esc>]12;red\x7"
+  silent !echo -ne "\033]12;red\007"
+  " reset cursor when vim exits
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+endif
+if exists('$TMUX')
+   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
@@ -254,6 +307,5 @@ let g:cpp_attributes_highlight = 1
 let g:coc_disable_startup_warning = 1
 " Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
-
 
 
