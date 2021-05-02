@@ -44,10 +44,14 @@ function MyDiff()
   endif
 endfunction
 set ai
-syntax enable
+syntax enable 
+
 set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
 set number
 :hi Space ctermfg=darkgrey
+if has('gui_running')
+  set guioptions-=e
+endif
 set incsearch
 :set hlsearch
 :set ignorecase
@@ -79,7 +83,52 @@ endif
 set nocompatible
 filetype off
 se list
+set foldtext=MyFoldText()
+function! MyFoldText()
+  let line = getline(v:foldstart)
+  if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
+    let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
+    let linenum = v:foldstart + 1
+    while linenum < v:foldend
+      let line = getline( linenum )
+      let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
+      if comment_content != ''
+        break
+      endif
+      let linenum = linenum + 1
+    endwhile
+    let sub = initial . ' ' . comment_content
+  else
+    let sub = line
+    let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
+    if startbrace == '{'
+      let line = getline(v:foldend)
+      let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
+      if endbrace == '}'
+        let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
+      endif
+    endif
+  endif
+  let n = v:foldend - v:foldstart + 1
+  let info = " " . n . " lines"
+  let sub = sub . "                 "
+  let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
+  let fold_w = getwinvar( 0, '&foldcolumn' )
+  let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
+  return sub . info
+endfunction
+
+
+
+
 filetype plugin indent on
+"autocmd Filetype * AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldmethod=syntax
+set foldlevel=999
+hi Folded term=NONE cterm=NONE
+map <F9> :source /home/mikhail/Prog/Scripts/vimscript/cppCompiler.vim <CR>
+map <C-f> za <CR>
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
@@ -98,6 +147,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'hallzy/lightline-onedark'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'airblade/vim-gitgutter'
+Plug 'bagrat/vim-buffet'
+"Plug 'pseewald/vim-anyfold'
 call plug#end()
 colorscheme molokai
 if &term =~ "xterm"
@@ -106,7 +158,13 @@ if &term =~ "xterm"
 endif
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#enable_nerdfont = 1
+let g:gitgutter_sign_added = '➕'
+let g:gitgutter_sign_modified = '✔'
+let g:gitgutter_sign_removed = '➖'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '~-'
 set scrolloff=999
+command Q q
 packadd! vimspector
 let g:tablineclosebutton=1
 set statusline+=%#warningmsg#
@@ -118,15 +176,34 @@ let g:syntastic_auto_loc_list = 1
 :match Space / /
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+vmap <C-Down> <Plug>MoveBlockDown
+vmap <C-Up> <Plug>MoveBlockUp
+nmap <C-Down> <Plug>MoveLineDown
+nmap <C-Up> <Plug>MoveLineUp
 let g:move_key_modifier = 'C'
-let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+"let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+function! GetLineNum()
+  let i = line('$')
+  return i
+endfunction
+let g:lightline#bufferline#unicode_symbols = 1
+let g:lightline#bufferline#clickable = 1
+command GetLineNum :call GetLineNum()
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'gitbranch', 'absolutepath' ] ],
+      \   'right': [ [ 'linenum' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
+      \ 'component': {
+      \ 'linenumabc': 'Ldugdf'
+      \ },
+      \
       \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
+      \   'gitbranch': 'gitbranch#name',
+      \   'linenum': 'GetLineNum'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \
@@ -142,7 +219,7 @@ let g:lightline = {
       \ 'component_type': {
       \   'buffers': 'tabsel'
       \ }
-      \ } 
+      \ }
 nnoremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 noremap <Leader><Tab> :Bw<CR>
@@ -169,7 +246,7 @@ set smarttab
 set expandtab
 set smartindent
 :highlight Normal ctermfg=white ctermbg=black
- let g:coc_start_at_startup = 1
+let g:coc_start_at_startup = 1
 set mouse=a
 if has("autocmd")
   au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
@@ -318,5 +395,3 @@ let g:cpp_attributes_highlight = 1
 let g:coc_disable_startup_warning = 1
 " Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
-
-
