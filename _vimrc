@@ -91,12 +91,14 @@ filetype plugin indent on
 set foldmethod=syntax
 set foldlevel=999
 hi Folded term=NONE cterm=NONE
-map <F9> :source /home/mikhail/Prog/Scripts/vimscript/cppCompiler.vim <CR>
+map <F9> :source /home/mikhail/Prog/Scripts/vimscript/cppCompiler.vim <CR>  "Compile and run
+map <F7> :source /home/mikhail/Prog/Scripts/vimscript/cppBuildOnly.vim <CR> "Compile only
+map <F5> :source /home/mikhail/Prog/Scripts/vimscript/cppRun.vim <CR>       "Run only 
 map <C-f> za <CR> 
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'ManOfTeflon/nerdtree-json'
+Plug 'preservim/nerdtree'
 Plug 'luochen1990/rainbow'
 Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
@@ -107,14 +109,12 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'ryanoasis/vim-devicons'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'hallzy/lightline-onedark'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-gitgutter'
 Plug 'bagrat/vim-buffet'
 Plug 'jrudess/vim-foldtext'
-Plug 'vim-syntastic/syntastic'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 colorscheme molokai
 if &term =~ "xterm"
@@ -135,6 +135,7 @@ let g:tablineclosebutton=1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+:set ssl
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -198,6 +199,8 @@ map <C-b> :NERDTreeToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 let g:lightline#bufferline#show_number = 2
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
 set showtabline=2
 :set guicursor+=a:blinkon0
 "map <F3> ggVG :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
