@@ -91,9 +91,13 @@ filetype plugin indent on
 set foldmethod=syntax
 set foldlevel=999
 hi Folded term=NONE cterm=NONE
-map <F9> :source /home/mikhail/Prog/Scripts/vimscript/cppCompiler.vim <CR>  "Compile and run
-map <F7> :source /home/mikhail/Prog/Scripts/vimscript/cppBuildOnly.vim <CR> "Compile only
-map <F5> :source /home/mikhail/Prog/Scripts/vimscript/cppRun.vim <CR>       "Run only 
+"build and run
+map <F9> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r <CR>
+"build
+map <F8> :!clear <CR> :w <CR> :!g++ % -o %:r <CR> 
+"run
+map <F5> :!clear <CR> :w <CR> :!./%:r
+"folding
 map <C-f> za <CR> 
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
@@ -116,6 +120,7 @@ Plug 'bagrat/vim-buffet'
 Plug 'jrudess/vim-foldtext'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
+
 colorscheme molokai
 if &term =~ "xterm"
     let &t_SI = "\<Esc>]12;purple\x7"
@@ -135,7 +140,6 @@ let g:tablineclosebutton=1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-:set ssl
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -260,7 +264,7 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
