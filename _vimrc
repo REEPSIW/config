@@ -207,8 +207,6 @@ let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
 set showtabline=2
 :set guicursor+=a:blinkon0
-"map <F3> ggVG :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
-"imap <C-5> <c-o>:py3f /usr/share/clang/clang-let g:lightline#bufferline#show_number  = 1format-6.0/clang-format.py<cr>
 autocmd FileType apache setlocal commentstring=#\ %s
 let delimitMate_expand_cr = 1
 set tabstop=4
