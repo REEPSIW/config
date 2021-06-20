@@ -1,16 +1,10 @@
 " Vim with all enhancements
 " ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
-source $VIMRUNTIME/vimrc_example.vim
-
-" Remap a few keys for Windows behavior
-source $VIMRUNTIME/mswin.vim
-
-" Use the internal diff if available.
 " Otherwise use the special 'diffexpr' for Windows.
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
-
+autocmd ColorScheme molokai hi StartifyHeader ctermfg=035 ctermbg=NONE cterm=italic
 function MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -44,14 +38,21 @@ function MyDiff()
   endif
 endfunction
 set ai
-syntax enable 
-
+if !exists('g:syntax_on')
+    syntax enable
+endif
+if exists("g:loaded_webdevicons")
+    call webdevicons#refresh()
+endif
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 set listchars=tab:>·,trail:·,extends:>,precedes:<,space:·
 set number
 :hi Space ctermfg=darkgrey
 if has('gui_running')
   set guioptions-=e
 endif
+set wildmenu
 set incsearch
 :set hlsearch
 :set ignorecase
@@ -83,11 +84,11 @@ endif
 set nocompatible
 filetype off
 se list
-
-
-
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 filetype plugin indent on
-
+set conceallevel=3
 set foldmethod=syntax
 set foldlevel=999
 hi Folded term=NONE cterm=NONE
@@ -118,9 +119,21 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'airblade/vim-gitgutter'
 Plug 'bagrat/vim-buffet'
 Plug 'jrudess/vim-foldtext'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
-
+let g:startify_custom_header = [
+\ '                                            ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
+\ '                                             ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
+\ '                                                   ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ',
+\ '                                                    ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ',
+\ '                                                   ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ',
+\ '                                            ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ',
+\ '                                           ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ',
+\ '                                          ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ',
+\ '                                          ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ',
+\ '                                               ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ',
+\ '                                                ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
+\ '                                                  ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋      ',
+\]
 colorscheme molokai
 if &term =~ "xterm"
     let &t_SI = "\<Esc>]12;purple\x7"
@@ -196,14 +209,14 @@ noremap <Leader><S-Tab> :Bw!<CR>
 noremap <C-t> :tabnew split<CR>
 set laststatus=2
 set noshowmode
-:set noundofile
 :set cindent
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
+:let g:NERDTreeWinSize=20
+let NERDTreeHighlightCursorline = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 let g:lightline#bufferline#show_number = 2
-let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
 set showtabline=2
 :set guicursor+=a:blinkon0
@@ -224,7 +237,7 @@ if has("autocmd")
 endif
 " if hidden is not set, TextEdit might fail.
 set hidden
-let g:coc_node_path = '/home/mikhail/node-v10.16.0-linux-x86/bin/node'
+let g:coc_node_path = '/home/mikhail/node10.16/bin/node'
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
