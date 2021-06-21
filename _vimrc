@@ -55,9 +55,9 @@ endif
 set nocursorline
 set nocursorcolumn
 set norelativenumber
-set lazyredraw
 set wildmenu
 set incsearch
+set cino+=m1
 :set hlsearch
 :set ignorecase
 :set smartcase
@@ -96,10 +96,10 @@ set conceallevel=3
 set foldmethod=syntax
 set foldlevel=999
 hi Folded term=NONE cterm=NONE
-"build and run
-map <F9> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r <CR>
 "build
 map <F8> :!clear <CR> :w <CR> :!g++ % -o %:r <CR> 
+"build and run 
+map <F9> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r <CR>
 "run
 map <F5> :!clear <CR> :w <CR> :!./%:r
 "folding
@@ -120,9 +120,9 @@ Plug 'jszakmeister/vim-togglecursor'
 Plug 'jiangmiao/auto-pairs'
 Plug 'hallzy/lightline-onedark'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'airblade/vim-gitgutter'
-Plug 'bagrat/vim-buffet'
+Plug 'dense-analysis/ale'
 Plug 'jrudess/vim-foldtext'
+Plug 'maximbaz/lightline-ale'
 call plug#end()
 let g:startify_custom_header = [
 \ '                                            ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
@@ -139,10 +139,9 @@ let g:startify_custom_header = [
 \ '                                                  ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋      ',
 \]
 colorscheme molokai
-if &term =~ "xterm"
-    let &t_SI = "\<Esc>]12;purple\x7"
-    let &t_EI = "\<Esc>]12;blue\x7"
-endif
+highlight ALEError ctermbg=057
+highlight ALEErrorSign ctermfg=196 ctermbg=235
+highlight ALEWarningSign ctermfg=190 ctermbg=238
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#enable_nerdfont = 1
 let g:gitgutter_sign_added = '➕'
@@ -151,16 +150,8 @@ let g:gitgutter_sign_removed = '➖'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '~-'
 set scrolloff=999
-:set viminfo^=%
-packadd! vimspector
-let g:tablineclosebutton=1
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:AutoPairsFlyMode = 1
+" :set viminfo^=%
 :match Space / /
 vmap <C-Down> <Plug>MoveBlockDown
 vmap <C-Up> <Plug>MoveBlockUp
@@ -173,18 +164,15 @@ function! GetLineNum()
   return i
 endfunction
 let g:lightline#bufferline#unicode_symbols = 1
-let g:lightline#bufferline#clickable = 1
 command GetLineNum :call GetLineNum()
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'gitbranch', 'absolutepath' ] ],
-      \   'right': [ [ 'linenum' ],
+      \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ],
+      \              [ 'linenum' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component': {
-      \ 'linenumabc': 'Ldugdf'
+      \              [ 'fileencoding', 'filetype'] ]
       \ },
       \
       \ 'component_function': {
@@ -197,10 +185,14 @@ let g:lightline = {
       \
       \ 'tabline': {
       \   'left': [ ['buffers'] ],
-      \   'right': [ ['close'] ]
       \ },
       \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers'
+      \   'buffers': 'lightline#bufferline#buffers',
+      \   'linter_checking': 'lightline#ale#checking',
+      \   'linter_infos': 'lightline#ale#infos',
+      \   'linter_warnings': 'lightline#ale#warnings',
+      \   'linter_errors': 'lightline#ale#errors',
+      \   'linter_ok': 'lightline#ale#ok'
       \ },
       \ 'component_type': {
       \   'buffers': 'tabsel'
@@ -221,7 +213,11 @@ let NERDTreeHighlightCursorline = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 let g:lightline#bufferline#show_number = 2
-
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_infos = "\uf129 "
+let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:lightline#ale#indicator_errors = "\uf05e "
+let g:lightline#ale#indicator_ok = "\uf00c"
 set showtabline=2
 :set guicursor+=a:blinkon0
 autocmd FileType apache setlocal commentstring=#\ %s
@@ -240,7 +236,8 @@ if has("autocmd")
   au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
 endif
 " if hidden is not set, TextEdit might fail.
-set hidden
+set hidden confirm
+set switchbuf=useopen
 let g:coc_node_path = '/home/mikhail/node10.16/bin/node'
 " Some servers have issues with backup files, see #649
 set nobackup
