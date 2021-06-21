@@ -52,6 +52,10 @@ set number
 if has('gui_running')
   set guioptions-=e
 endif
+set nocursorline
+set nocursorcolumn
+set norelativenumber
+set lazyredraw
 set wildmenu
 set incsearch
 :set hlsearch
