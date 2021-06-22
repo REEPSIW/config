@@ -5,6 +5,7 @@ if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
 autocmd ColorScheme molokai hi StartifyHeader ctermfg=035 ctermbg=NONE cterm=italic
+autocmd ColorScheme molokai hi BookmarkSign   ctermfg=021 ctermbg=235
 function MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -117,7 +118,7 @@ Plug 'luochen1990/rainbow'
 Plug 'tomtom/tcomment_vim'
 Plug 'matze/vim-move'
 Plug 'ap/vim-css-color'
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify', {'branch': 'center'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bfrg/vim-cpp-modern'
 Plug 'ryanoasis/vim-devicons'
@@ -128,25 +129,40 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'dense-analysis/ale'
 Plug 'jrudess/vim-foldtext'
 Plug 'maximbaz/lightline-ale'
+Plug 'mileszs/ack.vim'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'rhysd/vim-clang-format'
+
 call plug#end()
 let g:startify_custom_header = [
-\ '                                            ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
-\ '                                             ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
-\ '                                                   ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ',
-\ '                                                    ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ',
-\ '                                                   ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ',
-\ '                                            ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ',
-\ '                                           ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ',
-\ '                                          ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ',
-\ '                                          ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ',
-\ '                                               ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ',
-\ '                                                ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
-\ '                                                  ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋      ',
+\ '                                                    ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
+\ '                                                    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
+\ '                                                          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ',
+\ '                                                           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ',
+\ '                                                          ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ',
+\ '                                                   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ',
+\ '                                                  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ',
+\ '                                                 ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ',
+\ '                                                 ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ',
+\ '                                                      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ',
+\ '                                                       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
+\ '                                                         ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋      ',
 \]
+let g:startify_bookmarks = [
+\ '~/_vimrc'
+\]
+let g:startify_lists = [
+    \ { 'type': 'sessions',  'header': startify#center(['Sessions']) },
+    \ { 'type': 'bookmarks', 'header': startify#center(['Bookmarks']) },
+    \ { 'type': 'files',     'header': startify#center(['Files']) },
+    \ { 'type': 'commands',  'header': startify#center(['Commands']) },
+    \ ]
+let g:startify_padding_left = 50
+let g:startify_session_autoload = 1
 colorscheme molokai
 highlight ALEError ctermbg=057
-highlight ALEErrorSign ctermfg=196 ctermbg=235
-highlight ALEWarningSign ctermfg=190 ctermbg=238
+highlight ALEErrorSign ctermbg=235 ctermfg=196
+highlight ALEWarningSign ctermfg=190 ctermbg=235
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#enable_nerdfont = 1
 let g:gitgutter_sign_added = '➕'
@@ -155,7 +171,6 @@ let g:gitgutter_sign_removed = '➖'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '~-'
 set scrolloff=999
-let g:AutoPairsFlyMode = 1
 " :set viminfo^=%
 :match Space / /
 vmap <C-Down> <Plug>MoveBlockDown
@@ -226,7 +241,6 @@ let g:lightline#ale#indicator_ok = "\uf00c"
 set showtabline=2
 :set guicursor+=a:blinkon0
 autocmd FileType apache setlocal commentstring=#\ %s
-let delimitMate_expand_cr = 1
 set tabstop=4
 set shiftwidth=4
 set smarttab
