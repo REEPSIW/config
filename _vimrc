@@ -1,27 +1,6 @@
 " Vim with all enhancements
 " ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
 " Otherwise use the special 'diffexpr' for Windows.
-:let c_comment_strings = 1
-:unlet c_comment_strings
-call plug#begin('~/.vim/plugged')
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
-Plug 'preservim/nerdtree'
-Plug 'luochen1990/rainbow'
-Plug 'tomtom/tcomment_vim'
-Plug 'matze/vim-move'
-Plug 'ap/vim-css-color'
-Plug 'mhinz/vim-startify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bfrg/vim-cpp-modern'
-Plug 'ryanoasis/vim-devicons'
-Plug 'jszakmeister/vim-togglecursor'
-Plug 'jiangmiao/auto-pairs'
-Plug 'hallzy/lightline-onedark'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'jrudess/vim-foldtext'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-call plug#end()
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
@@ -79,6 +58,11 @@ set norelativenumber
 set wildmenu
 set incsearch
 set cino+=m1
+
+"disable syntax highlighting inside a comments
+:let c_comment_strings = 1 
+:unlet c_comment_strings
+
 :set hlsearch
 :set ignorecase
 :set smartcase
@@ -93,6 +77,19 @@ set backspace=indent,eol,start
 :set fileencoding=utf-8
 set encoding=UTF-8
 :set guifont=Consolas:h14
+if has("gui_running")
+  if has("gui_gtk2") || has("gui_gtk3")
+    set guifont=Courier\ New\ 11
+  elseif has("gui_photon")
+    set guifont=Courier\ New:s11
+  elseif has("gui_kde")
+    set guifont=Courier\ New/11/-1/5/50/0/0/0/1/0
+  elseif has("x11")
+    set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+  else
+    set guifont=Consolas:h13:cDEFAULT
+  endif
+endif
 set nocompatible
 filetype off
 se list
@@ -112,6 +109,26 @@ map <F9> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r <CR>
 map <F5> :!clear <CR> :w <CR> :!./%:r
 "folding
 map <C-f> za <CR> 
+call plug#begin('~/.vim/plugged')
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'preservim/nerdtree'
+Plug 'luochen1990/rainbow'
+Plug 'tomtom/tcomment_vim'
+Plug 'matze/vim-move'
+Plug 'ap/vim-css-color'
+Plug 'mhinz/vim-startify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'bfrg/vim-cpp-modern'
+Plug 'ryanoasis/vim-devicons'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'jiangmiao/auto-pairs'
+Plug 'hallzy/lightline-onedark'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'dense-analysis/ale'
+Plug 'jrudess/vim-foldtext'
+Plug 'maximbaz/lightline-ale'
+call plug#end()
 let g:startify_custom_header = [
 \ '                                            ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
 \ '                                             ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
@@ -136,7 +153,7 @@ let g:gitgutter_sign_added = '➕'
 let g:gitgutter_sign_modified = '✔️'
 let g:gitgutter_sign_removed = '➖'
 let g:gitgutter_sign_removed_first_line = '^'
-let g:gitgutter_sign_modified_removed = '🔧➖'
+let g:gitgutter_sign_modified_removed = '~-'
 set scrolloff=999
 let g:AutoPairsFlyMode = 1
 " :set viminfo^=%
@@ -194,10 +211,6 @@ noremap <C-t> :tabnew split<CR>
 set laststatus=2
 set noshowmode
 :set cindent
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
 :let g:NERDTreeWinSize=20
@@ -222,9 +235,15 @@ set smartindent
 :highlight Normal ctermfg=white ctermbg=black
 let g:coc_start_at_startup = 1
 set mouse=a
+if has("autocmd")
+  au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+  au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+  au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+endif
 " if hidden is not set, TextEdit might fail.
 set hidden confirm
 set switchbuf=useopen
+let g:coc_node_path = '/home/mikhail/node10.16/bin/node'
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
@@ -363,3 +382,4 @@ let g:coc_disable_startup_warning = 1
 " Highlight struct/class member variables (affects both C and C++ files)
 let g:cpp_member_highlight = 1
 "============================================================================================================================
+
