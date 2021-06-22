@@ -1,6 +1,27 @@
 " Vim with all enhancements
 " ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
 " Otherwise use the special 'diffexpr' for Windows.
+:let c_comment_strings = 1
+:unlet c_comment_strings
+call plug#begin('~/.vim/plugged')
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'preservim/nerdtree'
+Plug 'luochen1990/rainbow'
+Plug 'tomtom/tcomment_vim'
+Plug 'matze/vim-move'
+Plug 'ap/vim-css-color'
+Plug 'mhinz/vim-startify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'bfrg/vim-cpp-modern'
+Plug 'ryanoasis/vim-devicons'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'jiangmiao/auto-pairs'
+Plug 'hallzy/lightline-onedark'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'jrudess/vim-foldtext'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+call plug#end()
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
@@ -91,26 +112,6 @@ map <F9> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r <CR>
 map <F5> :!clear <CR> :w <CR> :!./%:r
 "folding
 map <C-f> za <CR> 
-call plug#begin('~/.vim/plugged')
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
-Plug 'preservim/nerdtree'
-Plug 'luochen1990/rainbow'
-Plug 'tomtom/tcomment_vim'
-Plug 'matze/vim-move'
-Plug 'ap/vim-css-color'
-Plug 'mhinz/vim-startify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bfrg/vim-cpp-modern'
-Plug 'ryanoasis/vim-devicons'
-Plug 'jszakmeister/vim-togglecursor'
-Plug 'jiangmiao/auto-pairs'
-Plug 'hallzy/lightline-onedark'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'dense-analysis/ale'
-Plug 'jrudess/vim-foldtext'
-Plug 'maximbaz/lightline-ale'
-call plug#end()
 let g:startify_custom_header = [
 \ '                                            ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
 \ '                                             ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
@@ -193,6 +194,10 @@ noremap <C-t> :tabnew split<CR>
 set laststatus=2
 set noshowmode
 :set cindent
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
 "autocmd vimenter * NERDTree
 map <C-b> :NERDTreeToggle<CR>
 :let g:NERDTreeWinSize=20
@@ -220,7 +225,6 @@ set mouse=a
 " if hidden is not set, TextEdit might fail.
 set hidden confirm
 set switchbuf=useopen
-let g:coc_node_path = '/home/mikhail/node10.16/bin/node'
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
