@@ -72,19 +72,6 @@ set backspace=indent,eol,start
 :set fileencoding=utf-8
 set encoding=UTF-8
 :set guifont=Consolas:h14
-if has("gui_running")
-  if has("gui_gtk2") || has("gui_gtk3")
-    set guifont=Courier\ New\ 11
-  elseif has("gui_photon")
-    set guifont=Courier\ New:s11
-  elseif has("gui_kde")
-    set guifont=Courier\ New/11/-1/5/50/0/0/0/1/0
-  elseif has("x11")
-    set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
-  else
-    set guifont=Consolas:h13:cDEFAULT
-  endif
-endif
 set nocompatible
 filetype off
 se list
@@ -230,11 +217,6 @@ set smartindent
 :highlight Normal ctermfg=white ctermbg=black
 let g:coc_start_at_startup = 1
 set mouse=a
-if has("autocmd")
-  au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
-  au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-  au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-endif
 " if hidden is not set, TextEdit might fail.
 set hidden confirm
 set switchbuf=useopen
