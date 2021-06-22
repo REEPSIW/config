@@ -145,10 +145,10 @@ highlight ALEWarningSign ctermfg=190 ctermbg=238
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#enable_nerdfont = 1
 let g:gitgutter_sign_added = '➕'
-let g:gitgutter_sign_modified = '✔'
+let g:gitgutter_sign_modified = '✔️'
 let g:gitgutter_sign_removed = '➖'
 let g:gitgutter_sign_removed_first_line = '^'
-let g:gitgutter_sign_modified_removed = '~-'
+let g:gitgutter_sign_modified_removed = '🔧➖'
 set scrolloff=999
 let g:AutoPairsFlyMode = 1
 " :set viminfo^=%
