@@ -1,6 +1,7 @@
 " Vim with all enhancements
 " ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
 " Otherwise use the special 'diffexpr' for Windows.
+" Add highlighting for function definition in C++
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
 endif
@@ -8,6 +9,8 @@ autocmd ColorScheme molokai hi StartifyHeader ctermfg=035 ctermbg=NONE cterm=ita
 autocmd ColorScheme molokai hi BookmarkSign   ctermfg=051 ctermbg=black
 autocmd ColorScheme molokai hi CocErrorSign   ctermfg=196 ctermbg=black cterm=bold
 autocmd ColorScheme molokai hi CocWarningSign ctermfg=190 ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi cCustomFunc  ctermfg=011
+autocmd ColorScheme molokai hi cCustomClass ctermfg=011
 function MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -99,11 +102,13 @@ se list
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+let g:NERDTreeShowHidden=1
 filetype plugin indent on
 set conceallevel=3
 set foldmethod=syntax
 set foldlevel=999
 hi Folded term=NONE cterm=NONE
+nmap <F6> :TagbarToggle<CR>
 "build
 map <F8> :!clear <CR> :w <CR> :!g++ % -o %:r <CR> 
 "build and run 
@@ -132,9 +137,16 @@ Plug 'mileszs/ack.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'rhysd/vim-clang-format'
 Plug 'josa42/vim-lightline-coc'
+Plug 'majutsushi/tagbar'
+Plug 'soramugi/auto-ctags.vim'
 call plug#end()
 let g:startify_custom_header = [
-\ '                                                    ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
+\ '                                                                                   ',
+\ '                                                                                   ',
+\ '                                                                                   ',
+\ '                                                                                   ',
+\ '                                                                                   ',
+\ '                                                    ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆         ',
 \ '                                                    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
 \ '                                                          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ',
 \ '                                                           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ',
@@ -145,7 +157,7 @@ let g:startify_custom_header = [
 \ '                                                 ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ',
 \ '                                                      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ',
 \ '                                                       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
-\ '                                                         ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋      ',
+\ '                                                         ⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋       ',
 \]
 let g:startify_bookmarks = [
 \ '~/_vimrc'
@@ -161,6 +173,7 @@ let g:startify_lists = [
 let g:startify_session_autoload = 1
 let g:lightline#ale#indicator_ok = "\uf00c"
 let g:startify_enable_special = 0
+let g:tagbar_show_tag_linenumbers=2
 autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
 colorscheme molokai
 highlight ALEError ctermbg=005
@@ -174,6 +187,7 @@ let g:gitgutter_sign_removed = '➖'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '~-'
 let g:clang_library_path='/usr/lib/llvm-9/lib/clang/9.0.0/lib/linux'
+
 set scrolloff=999
 " :set viminfo^=%
 :match Space / /
@@ -192,13 +206,16 @@ command GetLineNum :call GetLineNum()
 let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'gitbranch', 'absolutepath' ] ],
-      \   'right': [ [ 'linenum', 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok', 'coc_status'],
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'gitbranch', 'filename'], ['tagbar' ] ],
+      \   'right': [ [ 'linenum','cocinfo', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok'],
       \   [ 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'gitbranch#name',
       \   'linenum': 'GetLineNum',
+      \ },
+      \ 'component': {
+      \   'tagbar':  '%{tagbar#currenttag("%s", "", "f")}'
       \ },
       \ 'component_expand': {
       \   'buffers': 'lightline#bufferline#buffers'
@@ -239,6 +256,7 @@ let NERDTreeHighlightCursorline = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:rainbow_active = 1
 let g:lightline#bufferline#show_number = 2
+let g:auto_ctags = 1
 set showtabline=2
 :set guicursor+=a:blinkon0
 autocmd FileType apache setlocal commentstring=#\ %s
