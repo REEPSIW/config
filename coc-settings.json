@@ -27,11 +27,13 @@
     "default": "\uf29c",
     "module": "\uf668"
     },
+    "suggest.noselect": false,
     "diagnostic.infoSign": ">>",
     "diagnostic.warningSign": "**",
-    "suggest.detailMaxLength": 100,
+    "suggest.detailMaxLength": 10,
     "suggest.labelMaxLength": 35,
     "suggest.maxPreviewWidth": 30,
     "suggest.disableMenuShortcut": true,
-    "suggest.detailField": "abbr"
+    "clangd.path": "/home/mikhail/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd",
+    "coc.source.file.ignoreHidden": false
 }

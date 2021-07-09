@@ -173,7 +173,7 @@ if &t_Co > 255
 
    hi MatchParen      ctermfg=232   ctermbg=8 cterm=bold
    hi ModeMsg         ctermfg=229
-   hi MoreMsg         ctermfg=229
+   hi MoreMsg         ctermfg=034
    hi Operator        ctermfg=161
 
    " complete menu
@@ -200,7 +200,7 @@ if &t_Co > 255
        hi SpellRare  ctermfg=none ctermbg=none  cterm=reverse
    endif
    hi Statement       ctermfg=161               cterm=bold
-   hi StatusLine      ctermfg=238 ctermbg=253
+   hi StatusLine      ctermfg=233 ctermbg=255
    hi StatusLineNC    ctermfg=244 ctermbg=232
    hi StorageClass    ctermfg=208
    hi Structure       ctermfg=81
@@ -216,7 +216,7 @@ if &t_Co > 255
    hi VisualNOS                   ctermbg=238
    hi Visual                      ctermbg=235
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
-   hi WildMenu        ctermfg=255  ctermbg=058
+   hi WildMenu        ctermfg=255  ctermbg=058  cterm=bold
    hi Comment         ctermfg=darkgreen
    hi CursorColumn                ctermbg=236
    hi CursorLine      ctermbg=red ctermfg=NONE
