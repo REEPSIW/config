@@ -1,1 +1,1 @@
-install.sh installs ONlY plugins for vim!
+install.sh installs ONLY plugins for vim!
