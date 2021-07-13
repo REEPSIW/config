@@ -8,6 +8,9 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH="$PATH:/home/mikhail/node14.17.2/bin"
 PATH="$PATH:/home/mikhail/bin"
+PATH="$PATH:/home/mikhail/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin"
+
+PATH="$PATH:/home/mikhail/.local/bin"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/mikhail/.oh-my-zsh"
 # Set name of the theme to load --- if set to "random", it will
@@ -102,6 +105,9 @@ alias aptIn="sudo apt install"
 alias aptRe="sudo apt remove"
 alias updg="sudo apt update && sudo apt upgrade"
 
+# https://ostechnix.com/easy-way-protect-files-accidental-deletion-linux/
+alias rm="rm-p"
+
 POWERLEVEL9K_MODE="nerdfont-complete"
 DISABLE_MAGIC_FUNCTIONS=true
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -135,3 +141,4 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ffffff,bg:#000000,hl:#008
 --color=fg+:#15b300,bg+:#262626,hl+:#ff9100
 --color=info:#ff4800,prompt:#ff0000,pointer:#ff00a2
 --color=marker:#51ff00,spinner:#ddff00,header:#3ac2c2'
+

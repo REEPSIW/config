@@ -25,6 +25,7 @@ if exists("g:molokai_original")
 else
     let s:molokai_original = 0
 endif
+match Space / /
 :hi cursorline guifg=NONE
 hi Boolean         guifg=#602dda              
 hi Character       guifg=#E6DB74
@@ -107,6 +108,8 @@ hi WildMenu        guifg=#66D9EF guibg=#000000
 
 hi TabLineFill     guifg=#1B1D1E guibg=#1B1D1E
 hi TabLine         guibg=#1B1D1E guifg=#808080 gui=none
+
+hi Space           guifg=#353638
 
 if s:molokai_original == 1
    hi Normal          guifg=#F8F8F2 guibg=#272822
@@ -200,13 +203,13 @@ if &t_Co > 255
        hi SpellRare  ctermfg=none ctermbg=none  cterm=reverse
    endif
    hi Statement       ctermfg=161               cterm=bold
-   hi StatusLine      ctermfg=233 ctermbg=255
-   hi StatusLineNC    ctermfg=244 ctermbg=232
+   hi StatusLine      ctermfg=255 ctermbg=233   cterm=NONE
+   hi StatusLineNC    ctermfg=255 ctermbg=233   cterm=NONE
    hi StorageClass    ctermfg=208
    hi Structure       ctermfg=81
    hi Tag             ctermfg=161
    hi Title           ctermfg=166
-   hi Todo            ctermfg=231 ctermbg=232   cterm=bold
+   hi Todo            ctermfg=031 ctermbg=16   cterm=bold 
 
    hi Typedef         ctermfg=81
    hi Type            ctermfg=81                cterm=none
@@ -216,7 +219,7 @@ if &t_Co > 255
    hi VisualNOS                   ctermbg=238
    hi Visual                      ctermbg=235
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
-   hi WildMenu        ctermfg=255  ctermbg=058  cterm=bold
+   hi WildMenu        ctermfg=255  ctermbg=058
    hi Comment         ctermfg=darkgreen
    hi CursorColumn                ctermbg=236
    hi CursorLine      ctermbg=red ctermfg=NONE
@@ -225,6 +228,7 @@ if &t_Co > 255
 
    hi SpecialKey      ctermfg=59
 
+       hi Space           ctermfg=239
    if exists("g:rehash256") && g:rehash256 == 1
        hi Normal       ctermfg=252 ctermbg=234
 
@@ -258,6 +262,7 @@ if &t_Co > 255
        hi Comment         ctermfg=244
        hi NonText         ctermfg=239
        hi SpecialKey      ctermfg=239
+       hi Space           ctermfg=239
    endif
 end
 

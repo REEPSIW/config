@@ -1,11 +1,20 @@
+" EXPERIMENTAL
+" makes vim faster
+set re=1
 " Vim with all enhancements
-" ЧТОБЫ ИЗМЕНИТЬ ЦВЕТА СКОБОК, ЗАЙТИ В RAINBOW_MAIN.VIM
 " Otherwise use the special 'diffexpr' for Windows.
 " Add highlighting for function definition in C++
-autocmd ColorScheme molokai hi StartifyHeader ctermfg=035 ctermbg=NONE cterm=italic
-autocmd ColorScheme molokai hi BookmarkSign   ctermfg=051 ctermbg=black
-autocmd ColorScheme molokai hi CocErrorSign   ctermfg=196 ctermbg=black cterm=bold
-autocmd ColorScheme molokai hi CocWarningSign ctermfg=190 ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi StartifyHeader        ctermfg=035 ctermbg=NONE  cterm=bold
+autocmd ColorScheme molokai hi BookmarkSign          ctermfg=051 ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi CocErrorSign          ctermfg=196 ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi CocWarningSign        ctermfg=190 ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi GitGutterAdd          ctermfg=2   ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi GitGutterChange       ctermfg=3   ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi GitGutterDelete       ctermfg=1   ctermbg=black cterm=bold
+autocmd ColorScheme molokai hi GitGutterChangeDelete ctermfg=1   ctermbg=black cterm=bold
+:hi Space ctermfg=196
+match Space / /
+syntax enable
 " autocmd ColorScheme molokai hi cCustomClass ctermfg=011
 " MAPPINGS
 
@@ -110,10 +119,10 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 map <F8> :!clear <CR> :w <CR> :!g++ % -o %:r && ./%:r<CR> 
 " ===============================================================================
 " Build and run a C++ project
-map <F9> :!clear <CR> :wa <CR> :!make && :!make run<CR>
+map <F4> :!clear <CR> :wa <CR> :!make && :!make run<CR>
 " ===============================================================================
 " Run a single C++ file
-map <F5> :!clear <CR> :w <CR> :!./%:r<CR>
+map <F7> :!clear <CR> :w <CR> :!./%:r<CR>
 " ===============================================================================
 " Folding
 map <C-f> za <CR> 
@@ -189,10 +198,12 @@ set switchbuf=useopen
 set nowritebackup
 set nobackup
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 set laststatus=2
 set noshowmode
-:set guicursor+=a:blinkon0
+set signcolumn=yes
+set guicursor+=a:blinkon0
+set t_Co=256
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
@@ -209,6 +220,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
 Plug 'junegunn/fzf.vim'
+Plug 'puremourning/vimspector'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 let g:startify_custom_header = [
@@ -313,7 +326,12 @@ let g:cpp_concepts_highlight = 1
 "FZF
 let g:fzf_buffers_jump = 1
 let g:fzf_tags_command = 'ctags -R'
-let g:fzf_layout = { 'down': '~50%' }
+
+" Vimspector
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+
+" Color_coded
+
 "============================================================================================================================
 let g:coc_node_path = '/home/mikhail/node14.17.2/bin/node'
 let g:coc_start_at_startup = 1
@@ -321,7 +339,6 @@ let g:coc_start_at_startup = 1
 let g:coc_disable_startup_warning = 1
 
 " Give more space for displaying messages.
-set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -332,12 +349,6 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -382,3 +393,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
+
+
+
+
