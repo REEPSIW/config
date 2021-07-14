@@ -1,4 +1,3 @@
-
 {
 "suggest.completionItemKindLabels": {
     "function": "\uf6a6",
@@ -34,5 +33,9 @@
     "suggest.labelMaxLength": 35,
     "suggest.maxPreviewWidth": 30,
     "suggest.disableMenuShortcut": true,
-    "coc.source.file.ignoreHidden": false
+    "coc.source.file.ignoreHidden": false,
+    "coc.preferences.semanticTokensHighlights": false,
+    "coc.source.file.enable": false,
+    "coc.source.around.enable": false,
+    "coc.source.buffer.enable": false
 }
