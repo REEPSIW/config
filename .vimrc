@@ -198,7 +198,7 @@ set switchbuf=useopen
 set nowritebackup
 set nobackup
 " Better display for messages
-set cmdheight=1
+set cmdheight=2
 set laststatus=2
 set noshowmode
 set signcolumn=yes
