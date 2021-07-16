@@ -294,11 +294,12 @@ call lightline#coc#register()
 let g:lightline#bufferline#enable_nerdfont = 1
 let g:lightline#bufferline#show_number = 2
 
+            " \ "AlignAfterOpenBracket" : "Align",
 let g:clang_format#style_options = {
             \ "AllowShortFunctionsOnASingleLine" : "false",
-            \ "AlignAfterOpenBracket" : "Align",
             \ "AlwaysBreakBeforeMultilineStrings " : "false",
-            \ "BreakBeforeBraces" : "Allman"}
+            \ "BreakBeforeBraces" : "Stroustrup",
+            \ "AccessModifierOffset": "-4"}
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 
@@ -333,6 +334,7 @@ let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 " Color_coded
 
 "============================================================================================================================
+let g:coc_node_path = '/home/mikhail/node14.17.2/bin/node'
 let g:coc_start_at_startup = 1
 
 let g:coc_disable_startup_warning = 1
