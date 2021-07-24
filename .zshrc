@@ -99,7 +99,7 @@ alias prog="cd /home/mikhail/Prog/Cpp"
 alias pacIn="sudo pacman -S"
 alias pacSe="pacman -Ss"
 alias pacRe="sudo pacman -Rs"
-alias mySys="clear && neofetch --ascii ~/ArchAscii | lolcat && echo -ne \"\033]12;black\007\" && read; echo -ne \"\033]12;white\007\""
+alias mySys="clear && neofetch --ascii ~/ArchAscii | lolcat && read" 
 # https://ostechnix.com/easy-way-protect-files-accidental-deletion-linux/
 
 POWERLEVEL9K_MODE="nerdfont-complete"
