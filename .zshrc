@@ -6,10 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-PATH="$PATH:/home/mikhail/node14.17.2/bin"
 PATH="$PATH:/home/mikhail/bin"
-PATH="$PATH:/home/mikhail/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin"
-
 PATH="$PATH:/home/mikhail/.local/bin"
 # Path to your oh-my-zsh installation.
 export ZSH="/home/mikhail/.oh-my-zsh"
@@ -99,14 +96,11 @@ typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias prog="cd /home/mikhail/Prog/Cpp"
-
-alias aptSe="apt search"
-alias aptIn="sudo apt install"
-alias aptRe="sudo apt remove"
-alias updg="sudo apt update && sudo apt upgrade"
-
+alias pacIn="sudo pacman -S"
+alias pacSe="pacman -Ss"
+alias pacRe="sudo pacman -Rs"
+alias mySys="clear && neofetch --ascii ~/ArchAscii | lolcat && echo -ne \"\033]12;black\007\" && read; echo -ne \"\033]12;white\007\""
 # https://ostechnix.com/easy-way-protect-files-accidental-deletion-linux/
-alias rm="rm-p"
 
 POWERLEVEL9K_MODE="nerdfont-complete"
 DISABLE_MAGIC_FUNCTIONS=true
@@ -122,20 +116,6 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
-### End of Zinit's installer chunk
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ffffff,bg:#000000,hl:#0080ff
 --color=fg+:#15b300,bg+:#262626,hl+:#ff9100
